@@ -1,0 +1,2 @@
+vim_github_repo: "https://github.com/vim/vim.git"
+vim_github_repo_tmp_folder: "/tmp"

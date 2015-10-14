@@ -1,0 +1,3 @@
+---
+- {include: vim.yml, tags: vim}
+- {include: spf13.yml, tags: spf13}

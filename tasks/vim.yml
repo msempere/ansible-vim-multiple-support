@@ -1,0 +1,43 @@
+---
+
+- include_vars: configuration.yml
+
+- name: Install Vim dependencies
+  action: yum pkg={{ item }} state=present
+  with_items:
+    - gcc
+    - make
+    - ncurses-devel
+    - lua 
+    - lua-devel
+    - ruby 
+    - ruby-devel
+    - python 
+    - python-devel
+  sudo: yes
+
+- name: Clone the Vim ansible Github repo
+  git: >
+    repo={{ vim_github_repo }} 
+    dest={{ vim_github_repo_tmp_folder}}/vim
+
+- name: Configure Vim
+  command: ./configure --disable-selinux --enable-luainterp --enable-pythoninterp --enable-python3interp --enable-tclinterp --enable-rubyinterp --enable-multibyte --disable-gui --with-features=huge
+  args:
+    chdir: "{{ vim_github_repo_tmp_folder }}/vim"
+
+- name: Make Vim
+  command: make
+  args:
+    chdir: "{{ vim_github_repo_tmp_folder }}/vim"
+
+- name: Install Vim
+  command: make install
+  args:
+    chdir: "{{ vim_github_repo_tmp_folder }}/vim"
+  sudo: yes
+
+- name: Cleaning
+  file: >
+    path={{ vim_github_repo_tmp_folder }}/vim
+    state=absent
