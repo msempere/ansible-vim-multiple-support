@@ -1,6 +1,6 @@
 # ansible-vim-lua
 
-Role to deploy spf13 Vim distribution with LUA support
+Role to deploy spf13 Vim distribution with Lua, Ruby, Python and Tcl support
 
 ## Example playbook
 
