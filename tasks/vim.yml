@@ -2,8 +2,8 @@
 
 - include_vars: configuration.yml
 
-- name: Install Vim dependencies
-  action: yum pkg={{ item }} state=present
+- name: Install Vim dependencies (APT)
+  apt: name={{ item }} state=present
   with_items:
     - gcc
     - make
@@ -14,6 +14,22 @@
     - ruby-devel
     - python 
     - python-devel
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  sudo: yes
+
+- name: Install Vim dependencies (YUM)
+  yum: name={{ item }} state=present
+  with_items:
+    - gcc
+    - make
+    - ncurses-devel
+    - lua 
+    - lua-devel
+    - ruby 
+    - ruby-devel
+    - python 
+    - python-devel
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
   sudo: yes
 
 - name: Clone the Vim ansible Github repo
